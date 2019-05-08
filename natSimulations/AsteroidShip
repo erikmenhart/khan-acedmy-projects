@@ -12,6 +12,7 @@ var Ship = function() {
 
 Ship.prototype.applyForce = function(force) {
     this.acceleration.add(force);
+    //applying accel force
 };
 
 Ship.prototype.accelerate = function(force) {
@@ -19,22 +20,23 @@ Ship.prototype.accelerate = function(force) {
     force.normalize();
     force.mult(1.5);
     this.applyForce(force);
+    //giving a value to accel by
 };
 
 Ship.prototype.turnLeft = function() {
     pushMatrix();
     this.velocity.rotate(-0.3);
     popMatrix();
+    //to rotate left
 };
-
+//to rotgate right
 Ship.prototype.turnRight = function() {
     pushMatrix();
     this.velocity.rotate(0.3);
     popMatrix();
 };
 
-
-
+//applying vectors to move ship
 Ship.prototype.update = function () {
     this.velocity.add(this.acceleration);
     this.velocity.limit(this.topspeed);
@@ -42,6 +44,7 @@ Ship.prototype.update = function () {
     this.acceleration.mult(0);
 };
 
+//Check edges
 Ship.prototype.checkEdges = function () {
     if (this.position.x > width) {
         this.position.x = 0;
@@ -56,6 +59,7 @@ Ship.prototype.checkEdges = function () {
     }
 };
 
+//drawing the ship and rotating towards heading
 Ship.prototype.display = function () {
     var angle = this.velocity.heading();
     angle = angle+1.5;
@@ -67,24 +71,28 @@ Ship.prototype.display = function () {
     translate(this.position.x, this.position.y);
     rotate(angle);
      fill(0, 0, 255);
- triangle(11,0,0,30,22,30);
- fill(0);
+    triangle(11,0,0,30,22,30);
+    fill(0);
     ellipse(16,30,10,4);
     ellipse(6,30,10,4);
     fill(255, 255, 255);
     ellipse(11,15,7,7);
-
     popMatrix();
 }; 
 
 var ship = new Ship();
-
+//controls
 keyPressed = function() {
+    //click left call
        if (keyCode === LEFT) {
            ship.turnLeft();
-       }  else if (keyCode === RIGHT) {
+       }  
+       //click right call
+       else if (keyCode === RIGHT) {
            ship.turnRight();
-       } else if (keyCode === 90) {
+       } 
+       //click z to accel
+       else if (keyCode === 90) {
            ship.accelerate();
        }
 };
