@@ -1,0 +1,27 @@
+var drawShape = function(x, y, radius) {
+    var rad = random(1);
+    var red = random(0, 255);
+    var blue = random(0, 255);
+    var green = random(0, 255);
+    //creating random colours
+    fill(red-radius, green+radius, blue+radius);
+    
+    //to make circles
+    if (rad < 0.5){
+        ellipse(radius, radius, radius, radius);
+        ellipse(width/radius+207, width-radius, radius, radius);
+    }
+    //to make squares
+    else if (rad >= 0.5){
+        rect(radius/2, radius, radius, radius);
+        rect(width+radius/3, radius, radius, radius);
+    }
+    
+    //decrease size
+    var newRadius = radius/2;
+    if (newRadius >= 2) {
+        drawShape(x-20, y, newRadius);
+        drawShape(x+20, y, newRadius);
+    }
+};
+drawShape(width/2, height/2, 400);
