@@ -1,0 +1,102 @@
+fill(0, 0, 0);
+textSize(12);
+text("Red is starting number looking for the minimum value, blue is minimum value that gets switched", 10, 10, 400, 100);
+
+//location of array
+var x=25;
+var y=64;
+
+//display
+var displayArray = function(array, lowest, index) {
+    fill(255, 0, 0);
+    textSize(12);
+    for(var i=0; i<array.length; i++){
+        text(array[i], x, y);
+        strokeWeight(4);
+        
+        //red = max
+        if (array[i] === array[index])
+        {
+            stroke(255, 0, 0);
+            line(x-8, y+6, x+14, y+6);
+        }
+        
+        //blue = min
+        if (array[i] === array[lowest])
+        {
+            stroke(51, 0, 255);
+            line(x-8, y+2, x+14, y+2);
+        }
+          
+        x=x+25;
+    }
+    y=y+25;
+    x=25;
+};
+
+//swapping
+var swap = function(array, firstIndex, secondIndex) {
+    var temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;
+};
+
+//finds smallest number to switch with
+var indexOfMinimum = function(array, startIndex) {
+
+    var minValue = array[startIndex];
+    var minIndex = startIndex;
+
+    for(var i = minIndex + 1; i < array.length; i++) {
+        if(array[i] < minValue) {
+            minIndex = i;
+            minValue = array[i];
+        }
+    } 
+    return minIndex;
+}; 
+
+//loop to check all values
+var selectionSort = function(array) {
+    var minimum;
+    for (var i=0; i<array.length; i++){
+        var minimumIndex = i;
+        minimum = indexOfMinimum(array, i);
+        displayArray(array, minimum, minimumIndex);
+        swap(array, i, minimum);
+    }
+};
+
+//example display
+fill(150, 8, 163);
+textSize(58);
+text("Example 1", 125, 102);
+fill(21, 39, 235);
+text("Example 2", 125, 185);
+fill(235, 235, 70);
+text("Example 3", 125, 270);
+fill(255, 0, 0);
+text("Example 4", 125, 370);
+
+strokeWeight(2);
+stroke(5, 0, 0);
+line(0, 125, 400, 125);
+line(0, 200, 400, 200);
+line(0, 300, 400, 300);
+
+//calliing arrays
+var array = [3, 2, 1];
+selectionSort(array);
+Program.assertEqual(array, [1, 2, 3]);
+
+var array2 = [9, 1, 8];
+selectionSort(array2);
+Program.assertEqual(array2, [1, 8, 9]);
+
+var array3 = [20, 10, 120, 0];
+selectionSort(array3);
+Program.assertEqual(array3, [0, 10, 20, 120]);
+
+var array4 = [23, 17, -9, 7];
+selectionSort(array4);
+Program.assertEqual(array4, [-9, 7, 17, 23]);
